@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import socket from '@/app/socket';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
-
+import './style.scss'
 const Loader = () => {
     const userConfig = useSelector((name: RootState) => name.data);
     const router = useRouter()

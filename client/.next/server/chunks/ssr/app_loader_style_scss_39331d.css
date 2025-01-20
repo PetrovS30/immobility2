@@ -1,0 +1,26 @@
+/* [project]/app/loader/style.scss.css [app-client] (css) */
+.loader {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loader span {
+  margin-bottom: 50px;
+}
+
+.loader a {
+  background-color: #1e1e1e;
+  color: #cfcfcf;
+  padding: 15px 20px;
+  border-radius: 11px;
+  font-size: 16px;
+}
+
+.loader > * {
+  color: #fff;
+}
+
+
+/*# sourceMappingURL=app_loader_style_scss_39331d.css.map*/

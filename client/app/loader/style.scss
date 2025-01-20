@@ -1,0 +1,28 @@
+// Variables
+$gray-light: #CFCFCF;
+$dark-gray: #575757;
+$jet-black: #0d0d0d;
+$slate-gray: #242424;
+
+.loader {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    span {
+        margin-bottom: 50px;
+    }
+
+    a {
+        background-color: #1e1e1e;
+        color: $gray-light;
+        padding: 15px 20px;
+        border-radius: 11px;
+        font-size: 16px;
+    }
+
+    &>* {
+        color: white;
+    }
+}

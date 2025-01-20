@@ -3,6 +3,7 @@ import socket from '@/app/socket';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
+import './style.scss'
 interface Message {
     name: string;
     msg: string;
@@ -31,8 +32,6 @@ const Chat = () => {
     const isMusicMessagePresent = history.some((item) => item.msg === 'Хочу Музыку');
 
     useEffect(() => {
-
-        
         if (audioRef.current && isMusicMessagePresent) {
             audioRef.current.play();
         }
@@ -41,7 +40,9 @@ const Chat = () => {
     useEffect(() => {
         getLiveMessages()
         socket.on('currentUser', data => {
-            if (data <= 2) {
+            console.log(data);
+
+            if (data <= 1) {
                 router.push('/loader')
             }
         })

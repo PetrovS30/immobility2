@@ -4,7 +4,7 @@ import GenderOptions from '../components/gender';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { sendUserQuery } from '../redux/slice';
-
+import './style.scss';
 interface GenderOption {
     id: number;
     title: string;
@@ -53,7 +53,7 @@ const Main = () => {
     return (
         <main className="main-content">
             <div className="container">
-                <div className="intro-section-container">
+                <div className='container'>
                     <div className="intro-section">
                         <h1>
                             В нашем мире анонимных знакомств каждое лицо - загадка, каждый человек - история.
@@ -75,13 +75,16 @@ const Main = () => {
                             />
                         ))}
                     </div>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="text-input"
-                        placeholder="Ваше имя"
-                    />
+                    <div className='search-name'>
+                        <span className="gender-label">Ваше имя</span>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="text-input"
+                            placeholder="Ваше имя"
+                        />
+                    </div>
                     <input
                         type="button"
                         onClick={initiateSearch}

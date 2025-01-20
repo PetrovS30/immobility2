@@ -3,8 +3,8 @@ import UserSlice from './slice';
 
 const store = configureStore({
     reducer: {
-        data: UserSlice,
-    },
+        data: UserSlice
+    }
 });
 export type RootState = ReturnType<typeof store.getState>;
 export default store;

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/khami/OneDrive/Desktop/next/client/app/loader/style.scss.css"],"sourcesContent":[".loader{margin-top:100px;display:flex;align-items:center;flex-direction:column}.loader span{margin-bottom:50px}.loader a{background-color:#1e1e1e;color:#cfcfcf;padding:15px 20px;border-radius:11px;font-size:16px}.loader>*{color:#fff}"],"names":[],"mappings":"AAAA;;;;;;;AAA+E;;;;AAAgC;;;;;;;;AAAqG"}},
+    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

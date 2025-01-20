@@ -1,0 +1,91 @@
+/* [project]/app/chat/style.scss.css [app-client] (css) */
+.heading {
+  padding-top: 108px;
+}
+
+.heading h1 {
+  max-width: 1014px;
+  font-size: 18px;
+  color: #cfcfcf;
+  font-family: Inter, monospace;
+  font-weight: 400;
+}
+
+.music {
+  display: inline-block;
+  font-size: 13px;
+  background: #1e1e1e;
+  padding: 10px 20px;
+  border: 1px solid #242424;
+  border-radius: 11px;
+  margin-right: 10px;
+  background-color: #0d0d0d;
+  margin-top: 20px;
+}
+
+.chat {
+  width: 800px;
+  margin: 0 auto;
+  padding-bottom: 180px;
+}
+
+.chat .message {
+  margin-top: 30px;
+}
+
+.chat .message .textUser {
+  color: #575757 !important;
+}
+
+.chat .message > span:first-child {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ffe5a3;
+}
+
+.chat-container {
+  color: #cfcfcf;
+}
+
+.submit-button {
+  padding: 12px 25px;
+  background-color: #1e1e1e;
+  height: 40px;
+  color: #fff;
+  outline: none;
+  border: 1px solid #242424;
+  border-radius: 11px;
+}
+
+.chat-form {
+  background: linear-gradient(360deg, #0c0c0c, #0c0c0ce3, #0c0c0c6e);
+  display: flex;
+  transform: translate(-50%);
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  gap: 10px;
+  width: 450px;
+  justify-content: center;
+  width: 100%;
+  height: 25%;
+}
+
+.text-input {
+  border-radius: 11px;
+  border: 1px solid #2d2d2d;
+  background-color: #111;
+  padding: 12px 25px;
+  color: #fff;
+  outline: none;
+  height: 40px;
+  width: 17%;
+}
+
+.text-input.sizeText {
+  width: 30%;
+  transition: all 1.2s;
+}
+
+/*# sourceMappingURL=app_chat_style_scss_b52d8e.css.map*/
