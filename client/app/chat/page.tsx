@@ -1,8 +1,9 @@
 'use client'
 import socket from '@/app/socket';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
 import './style.scss'
 interface Message {
     name: string;
@@ -11,10 +12,10 @@ interface Message {
 const Chat = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const router = useRouter()
-    const { localName, currentPath } = useSelector((name: any) => name.data);
+    const { localName } = useSelector((state: RootState) => state.data);
     const [localMessage, setLocalMessage] = useState<string>('');
     const [history, setHistory] = useState<Message[]>([])
-    const [StandardMessages, setStandardMessages] = useState(['Хочу Музыку', 'Как дела?']);
+    const StandardMessages: string[] = ['Хочу Музыку', 'Как дела?'];
     const [inputActive, setInputActive] = useState<boolean>(false)
 
     const sendMessage = () => {
@@ -35,7 +36,7 @@ const Chat = () => {
         if (audioRef.current && isMusicMessagePresent) {
             audioRef.current.play();
         }
-    }, [history]);
+    }, [history, isMusicMessagePresent]);
 
     useEffect(() => {
         getLiveMessages()
@@ -51,7 +52,7 @@ const Chat = () => {
             socket.off('liveMsg');
             socket.emit('chat_leave', localName)
         }
-    }, [router]);
+    }, [router, localName]);
 
     return (
         <>
@@ -64,7 +65,7 @@ const Chat = () => {
                         </div>
                         <div className="set-message">
                             <audio ref={audioRef} loop>
-                                <source src="https://zaycev.fobetor.zerocdn.com/9ca97a498a9ec12f700350cbbfcc7e0e:2025011916/track/24972322.mp3" type="audio/mp3" />
+                                <source src='https://s456vlx.storage.yandex.net/get-mp3/7bf20a527aee419f3c3e734712909c0d/00062c390ae91243/rmusic/U2FsdGVkX185q5UmRpAlOsNJ6JifyAePDubjNsd-HL0Bn-e_Syp96X7czhxjw-GhBRtEUXbxIBbRrgzosAN8FRtfoaxjgDN_bvr51h__rrY/500ae3ac6fe7c1051fc91257fab109ae06dc25cdc7c4279d05b96ffbca43451e/29331?track-id=111440168&play=false' type="audio/mp3" />
                                 Ваш браузер не поддерживает элемент audio.
                             </audio>
                             <div className="message">
@@ -73,13 +74,14 @@ const Chat = () => {
                                 {
                                     <div>
                                         {
-                                            StandardMessages.map((item) => <span onClick={() => generatePredefinedMessages(item)} className='music'>{item}</span>)
+                                            StandardMessages.map((item, index) => <span key={index} onClick={() => generatePredefinedMessages(item)} className='music'>{item}</span>)
                                         }
 
                                     </div>
                                 }
                             </div>
                             {
+
                                 history.map((item, index) => {
                                     return (
                                         <>

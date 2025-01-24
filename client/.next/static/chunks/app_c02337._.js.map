@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/khami/OneDrive/Desktop/next/client/app/socket.js"],"sourcesContent":["import { io } from 'socket.io-client';\r\nconst socket = io('http://localhost:4000');\r\n\r\nexport default socket;"],"names":[],"mappings":";;;AAAA;AAAA;;AACA,MAAM,SAAS,CAAA,GAAA,kLAAA,CAAA,KAAE,AAAD,EAAE;uCAEH"}},
-    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 24, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/khami/OneDrive/Desktop/next/client/app/page.tsx"],"sourcesContent":["'use client'\nimport Image from \"next/image\";\nimport socket from '@/app/socket';\nimport { useState, useEffect } from \"react\";\nimport Link from 'next/link';\nimport App from \"next/app\";\n\nexport default function Home() {\n  const [room, setRoom] = useState<{ active: boolean, room: string }>();\n  useEffect(() => {\n    // Устанавливаем слушатель\n    socket.on('roomCreated', (r) => {\n      setRoom(r);\n    });\n    return () => {\n      socket.off('roomCreated');\n    };\n  }, []);\n\n  return (\n    <>\n      <p>re</p>\n      <Link href=\"/chat\">Перейти на страницу о нас</Link>\n    </>\n  );\n}\n"],"names":[],"mappings":";;;;AAEA;AACA;AACA;;;AAJA;;;;AAOe,SAAS;;IACtB,MAAM,CAAC,MAAM,QAAQ,GAAG,CAAA,GAAA,6JAAA,CAAA,WAAQ,AAAD;IAC/B,CAAA,GAAA,6JAAA,CAAA,YAAS,AAAD;0BAAE;YACR,0BAA0B;YAC1B,gHAAA,CAAA,UAAM,CAAC,EAAE,CAAC;kCAAe,CAAC;oBACxB,QAAQ;gBACV;;YACA;kCAAO;oBACL,gHAAA,CAAA,UAAM,CAAC,GAAG,CAAC;gBACb;;QACF;yBAAG,EAAE;IAEL,qBACE;;0BACE,6LAAC;0BAAE;;;;;;0BACH,6LAAC,+JAAA,CAAA,UAAI;gBAAC,MAAK;0BAAQ;;;;;;;;AAGzB;GAlBwB;KAAA"}},
-    {"offset": {"line": 82, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

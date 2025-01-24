@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/khami/OneDrive/Desktop/next/client/app/loader/page.tsx"],"sourcesContent":["\"use client\"\r\nimport { useState, useEffect } from 'react';\r\nimport { useRouter } from 'next/navigation';\r\nimport socket from '@/app/socket';\r\nimport { useSelector } from 'react-redux';\r\n\r\nconst Loader = () => {\r\n    const { localName } = useSelector((name: any) => name.data);\r\n    const router = useRouter()\r\n    useEffect(() => {\r\n        console.log('xd');\r\n\r\n    }, [localName]);\r\n\r\n    return (\r\n        <>\r\n            <>\r\n                <div className=\"container\">\r\n                    <span>Ждем...</span>\r\n                </div>\r\n            </>\r\n        </>\r\n    )\r\n}\r\nexport default Loader;"],"names":[],"mappings":";;;;AACA;AACA;AAEA;;;AAJA;;;;AAMA,MAAM,SAAS;;IACX,MAAM,EAAE,SAAS,EAAE,GAAG,CAAA,GAAA,4JAAA,CAAA,cAAW,AAAD;8BAAE,CAAC,OAAc,KAAK,IAAI;;IAC1D,MAAM,SAAS,CAAA,GAAA,qIAAA,CAAA,YAAS,AAAD;IACvB,CAAA,GAAA,6JAAA,CAAA,YAAS,AAAD;4BAAE;YACN,QAAQ,GAAG,CAAC;QAEhB;2BAAG;QAAC;KAAU;IAEd,qBACI;kBACI,cAAA;sBACI,cAAA,6LAAC;gBAAI,WAAU;0BACX,cAAA,6LAAC;8BAAK;;;;;;;;;;;;;AAK1B;GAjBM;;QACoB,4JAAA,CAAA,cAAW;QAClB,qIAAA,CAAA,YAAS;;;KAFtB;uCAkBS"}},
-    {"offset": {"line": 65, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 75, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/khami/OneDrive/Desktop/next/client/node_modules/next/navigation.js"],"sourcesContent":["module.exports = require('./dist/client/components/navigation')\n"],"names":[],"mappings":"AAAA,OAAO,OAAO","ignoreList":[0]}},
-    {"offset": {"line": 76, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

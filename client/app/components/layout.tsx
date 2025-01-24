@@ -1,10 +1,8 @@
 "use client"
-import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import React, { ReactNode } from 'react';
 import Header from './header';
-import { Provider } from 'react-redux';
-import store from '../redux/store';
 import { useDispatch } from 'react-redux';
 import { setPageLog } from '../redux/slice';
 import socket from '@/app/socket';
