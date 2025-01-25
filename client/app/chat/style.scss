@@ -65,7 +65,7 @@ $slate-gray: #242424;
 }
 
 .chat-form {
-    background: linear-gradient(360deg, #0c0c0c, #0c0c0ce3, rgb(12 12 12 / 43%));
+    background: linear-gradient(360deg, #0c0c0c, #0c0c0ce3, #0c0c0c00);
     display: flex;
     transform: translate(-50%, 0%);
     position: fixed;
@@ -92,4 +92,20 @@ $slate-gray: #242424;
 .text-input.sizeText {
     width: 30%;
     transition: 1.2s ease;
+}
+
+.set-message {
+    padding-bottom: 55px;
+}
+
+body::-webkit-scrollbar {
+    width: 7px;
+    /* ширина scrollbar */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(93, 93, 93);
+    /* цвет плашки */
+    border-radius: 4px;
+    /* закругления плашки */
 }

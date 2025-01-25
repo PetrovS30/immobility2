@@ -17,13 +17,26 @@ const Chat = () => {
     const [history, setHistory] = useState<Message[]>([])
     const StandardMessages: string[] = ['Хочу Музыку', 'Как дела?'];
     const [inputActive, setInputActive] = useState<boolean>(false)
+    const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+
 
     const sendMessage = () => {
+        if (!localMessage.trim()) {
+            return;
+        }
         socket.emit('sendMessae', localMessage)
+        setLocalMessage('')
+        setHistory(prevHistory => {
+            if (prevHistory.length > 10) {
+                return prevHistory.slice(1); // Удаляем первое сообщение
+            }
+            return prevHistory;
+        });
     }
 
     const generatePredefinedMessages = (item: string) => {
-        socket.emit('sendMessae', item)
+        setLocalMessage(item)
     }
     const getLiveMessages = () => {
         socket.on('liveMsg', (msg) => {
@@ -36,13 +49,12 @@ const Chat = () => {
         if (audioRef.current && isMusicMessagePresent) {
             audioRef.current.play();
         }
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [history, isMusicMessagePresent]);
 
     useEffect(() => {
         getLiveMessages()
         socket.on('currentUser', data => {
-            console.log(data);
-
             if (data <= 1) {
                 router.push('/loader')
             }
@@ -54,6 +66,13 @@ const Chat = () => {
         }
     }, [router, localName]);
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    };
+
     return (
         <>
             <div className="chat-container">
@@ -64,8 +83,8 @@ const Chat = () => {
                             <a href="">Пожаловаться</a>
                         </div>
                         <div className="set-message">
-                            <audio ref={audioRef} loop>
-                                <source src='https://s456vlx.storage.yandex.net/get-mp3/7bf20a527aee419f3c3e734712909c0d/00062c390ae91243/rmusic/U2FsdGVkX185q5UmRpAlOsNJ6JifyAePDubjNsd-HL0Bn-e_Syp96X7czhxjw-GhBRtEUXbxIBbRrgzosAN8FRtfoaxjgDN_bvr51h__rrY/500ae3ac6fe7c1051fc91257fab109ae06dc25cdc7c4279d05b96ffbca43451e/29331?track-id=111440168&play=false' type="audio/mp3" />
+                            <audio ref={audioRef}>
+                                <source src='https://zaycev.europium.zerocdn.com/bc43a68fa9baa2a25fa99e1933b20e4b:2025012512/track/24881994.mp3' type="audio/mp3" />
                                 Ваш браузер не поддерживает элемент audio.
                             </audio>
                             <div className="message">
@@ -76,7 +95,6 @@ const Chat = () => {
                                         {
                                             StandardMessages.map((item, index) => <span key={index} onClick={() => generatePredefinedMessages(item)} className='music'>{item}</span>)
                                         }
-
                                     </div>
                                 }
                             </div>
@@ -85,7 +103,7 @@ const Chat = () => {
                                 history.map((item, index) => {
                                     return (
                                         <>
-                                            <div key={index} className="message">
+                                            <div ref={messagesEndRef} key={index} className="message">
                                                 <span className="textUser">{item.name}</span>
                                                 <span className="">{item.msg}</span>
                                             </div>
@@ -99,7 +117,11 @@ const Chat = () => {
                                 onChange={(e) => setLocalMessage(e.target.value)}
                                 onClick={() => setInputActive(true)}
                                 className={`text-input ${inputActive ? 'sizeText' : ''}`}
-                                type="text" placeholder="Введите ваше сообшение" />
+                                type="text" placeholder="Введите ваше сообшение"
+                                onKeyDown={(event) => handleKeyDown(event)}
+                                value={localMessage}
+                            />
+
                             <input onClick={() => sendMessage()} className="submit-button" type="button" value="Отправить" />
                         </form>
                     </div>
