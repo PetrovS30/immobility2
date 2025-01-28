@@ -4,12 +4,15 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
+
 import './style.scss'
 interface Message {
     name: string;
     msg: string;
 }
+
 const Chat = () => {
+
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const router = useRouter()
     const { localName } = useSelector((state: RootState) => state.data);
@@ -54,6 +57,8 @@ const Chat = () => {
 
     useEffect(() => {
         getLiveMessages()
+        !localName && router.push('/');
+
         socket.on('currentUser', data => {
             if (data <= 1) {
                 router.push('/loader')
@@ -74,60 +79,60 @@ const Chat = () => {
     };
 
     return (
-        <>
-            <div className="chat-container">
-                <div className="container">
-                    <div className="chat">
-                        <div>
-                            <a href="">Завершить чат</a>
-                            <a href="">Пожаловаться</a>
-                        </div>
-                        <div className="set-message">
-                            <audio ref={audioRef}>
-                                <source src='https://zaycev.europium.zerocdn.com/bc43a68fa9baa2a25fa99e1933b20e4b:2025012512/track/24881994.mp3' type="audio/mp3" />
-                                Ваш браузер не поддерживает элемент audio.
-                            </audio>
-                            <div className="message">
-                                <span className="">Администратор</span>
-                                <span className="">Моменты первого контакта могут изменить вашу жизнь. Сделайте этот первый шаг и отправьте сообщение.</span>
+        localName ? (
+            <>
+                <div className="chat-container">
+                    <div className="container">
+                        <div className="chat">
+                            <div className="set-message">
+                                <audio ref={audioRef}>
+                                    <source src='https://zaycev.europium.zerocdn.com/bc43a68fa9baa2a25fa99e1933b20e4b:2025012512/track/24881994.mp3' type="audio/mp3" />
+                                    Ваш браузер не поддерживает элемент audio.
+                                </audio>
+                                <div className="message">
+                                    <span className="">Администратор</span>
+                                    <span className="">Моменты первого контакта могут изменить вашу жизнь. Сделайте этот первый шаг и отправьте сообщение.</span>
+                                    {
+                                        <div>
+                                            {
+                                                StandardMessages.map((item, index) => <span key={index} onClick={() => generatePredefinedMessages(item)} className='music'>{item}</span>)
+                                            }
+                                        </div>
+                                    }
+                                </div>
                                 {
-                                    <div>
-                                        {
-                                            StandardMessages.map((item, index) => <span key={index} onClick={() => generatePredefinedMessages(item)} className='music'>{item}</span>)
-                                        }
-                                    </div>
+
+                                    history.map((item, index) => {
+                                        return (
+                                            <>
+                                                <div ref={messagesEndRef} key={index} className="message">
+                                                    <span className="textUser">{item.name}</span>
+                                                    <span className="">{item.msg}</span>
+                                                </div>
+                                            </>
+                                        )
+                                    })
                                 }
                             </div>
-                            {
+                            <form className="chat-form" action="">
+                                <input
+                                    onChange={(e) => setLocalMessage(e.target.value)}
+                                    onClick={() => setInputActive(true)}
+                                    className={`text-input ${inputActive ? 'sizeText' : ''}`}
+                                    type="text" placeholder="Введите ваше сообшение"
+                                    onKeyDown={(event) => handleKeyDown(event)}
+                                    value={localMessage}
+                                />
 
-                                history.map((item, index) => {
-                                    return (
-                                        <>
-                                            <div ref={messagesEndRef} key={index} className="message">
-                                                <span className="textUser">{item.name}</span>
-                                                <span className="">{item.msg}</span>
-                                            </div>
-                                        </>
-                                    )
-                                })
-                            }
+                                <input onClick={() => sendMessage()} className="submit-button" type="button" value="Отправить" />
+                                
+                            </form>
                         </div>
-                        <form className="chat-form" action="">
-                            <input
-                                onChange={(e) => setLocalMessage(e.target.value)}
-                                onClick={() => setInputActive(true)}
-                                className={`text-input ${inputActive ? 'sizeText' : ''}`}
-                                type="text" placeholder="Введите ваше сообшение"
-                                onKeyDown={(event) => handleKeyDown(event)}
-                                value={localMessage}
-                            />
-
-                            <input onClick={() => sendMessage()} className="submit-button" type="button" value="Отправить" />
-                        </form>
                     </div>
                 </div>
-            </div>
-        </>
+            </>
+        ) : null
+
     )
 }
 export default Chat;

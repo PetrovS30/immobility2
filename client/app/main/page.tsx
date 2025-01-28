@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import GenderOptions from '../components/gender';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { sendUserQuery } from '../redux/slice';
+import myImage from './pngwing 1.png'
 import './style.scss';
 interface GenderOption {
     id: number;
@@ -53,8 +55,8 @@ const Main = () => {
     return (
         <main className="main-content">
             <div className="container">
-                <div className='container'>
-                    <div className="intro-section">
+                <div className="intro-section">
+                    <div>
                         <h1>
                             В нашем мире анонимных знакомств каждое лицо - загадка, каждый человек - история.
                         </h1>
@@ -62,7 +64,16 @@ const Main = () => {
                             Помните, ответственность за вашу безопасность лежит на вас. Не передавайте личные данные и будьте осторожны.
                         </span>
                     </div>
+
+                    <Image src={myImage} alt="Description" />;
                 </div>
+                <div className="roulette">
+                    <span className="roulette-chat">Чат</span>
+                    <span className="roulette-call">Созвон
+                        <p>В разработке</p>
+                    </span>
+                </div>
+
                 <form className="search-form" onSubmit={(e) => { e.preventDefault(); initiateSearch(); }}>
                     <div className="form-section">
                         {selectedGenders.map(option => (
@@ -76,7 +87,6 @@ const Main = () => {
                         ))}
                     </div>
                     <div className='search-name'>
-                        <span className="gender-label">Ваше имя</span>
                         <input
                             type="text"
                             value={name}
@@ -84,13 +94,13 @@ const Main = () => {
                             className="text-input"
                             placeholder="Ваше имя"
                         />
+                        <input
+                            type="button"
+                            onClick={initiateSearch}
+                            value="Поиск"
+                            className="search-button"
+                        />
                     </div>
-                    <input
-                        type="button"
-                        onClick={initiateSearch}
-                        value="Поиск"
-                        className="search-button"
-                    />
                 </form>
             </div>
         </main>
