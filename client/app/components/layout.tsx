@@ -6,6 +6,9 @@ import Header from './header';
 import { useDispatch } from 'react-redux';
 import { setPageLog } from '../redux/slice';
 import socket from '@/app/socket';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 
 interface LayoutProps {
     children: ReactNode;

@@ -12,6 +12,12 @@
   filter: drop-shadow(2px 4px 36px #ffffff2b);
 }
 
+.intro-section {
+  display: flex;
+  gap: 50px;
+  justify-content: space-between;
+}
+
 .intro-section h1 {
   font-size: 32px;
   color: #cfcfcf;
@@ -27,11 +33,43 @@
   height: 254px;
 }
 
+@keyframes anime {
+  0% {
+    transform: translateY(10px);
+  }
+
+  50% {
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.intro-section img {
+  animation: 4s infinite anime;
+  width: 200px;
+  height: 200px;
+  filter: drop-shadow(1px 1px 56px #ffffff63);
+  image-rendering: pixelated;
+  transform: scale(.999);
+}
+
+@media (width <= 990px) {
+  .intro-section {
+    margin-bottom: 30px;
+  }
+
+  .intro-section img {
+    display: none;
+  }
+}
+
 .form-section {
-  margin-top: 70px;
   display: flex;
   color: #cfcfcf;
-  margin-bottom: 30px;
+  margin: 30px 0;
 }
 
 .form-section .gender {
@@ -54,13 +92,18 @@
   background-color: #0d0d0d;
 }
 
+@media (width <= 500px) {
+  .form-section .gender {
+    margin-right: 20px;
+  }
+}
+
 .search-button {
-  padding: 14px 34px;
+  padding: 12px 33px;
   border-radius: 11px;
   border: none;
   background-color: #1e1e1e;
   color: #cfcfcf;
-  margin-top: 50px;
   font-weight: 700;
   transition: all .3s;
   cursor: pointer;
@@ -72,33 +115,74 @@
 
 .border.selected {
   transition: all .3s;
+  background: linear-gradient(46deg, #225cff33, #fff0);
   border: 1px solid #276aeb !important;
-}
-
-.navigation a.active {
-  font-weight: bold;
-  color: #cfcfcf;
 }
 
 .text-input {
   border-radius: 11px;
   border: 1px solid #2d2d2d;
   background-color: #111;
-  padding: 12px 25px;
+  padding: 12px 33px;
   color: #fff;
   outline: none;
-  height: 40px;
-  width: 17%;
+  max-width: 230px;
 }
 
 .search-name {
   display: flex;
-  flex-direction: column;
   gap: 22px;
 }
 
 .search-name span {
   color: #cfcfcf;
+}
+
+.roulette {
+  color: #fff;
+  display: flex;
+  gap: 20px;
+  max-width: 200px;
+  background: #1e1e1e;
+  justify-content: center;
+  padding: 12px 33px;
+  border-radius: 10px;
+}
+
+.roulette span {
+  color: #737373;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.roulette .roulette-chat {
+  color: #cfcfcf;
+}
+
+.roulette .roulette-call {
+  position: relative;
+}
+
+.roulette .roulette-call p {
+  position: absolute;
+  bottom: -55px;
+  background: #b3b3b3;
+  width: 130px;
+  padding: 10px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0;
+  transition: all .7s;
+  color: #363636;
+}
+
+.roulette .roulette-call:hover p {
+  opacity: 1;
+  z-index: 0;
 }
 
 /*# sourceMappingURL=app_main_style_scss_b52d8e.css.map*/
