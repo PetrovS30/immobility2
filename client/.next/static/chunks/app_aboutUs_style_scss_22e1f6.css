@@ -1,0 +1,13 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap";
+/* [project]/app/aboutUs/style.scss.css [app-client] (css) */
+.about-us {
+  font-size: 18px;
+  color: #cfcfcf;
+  line-height: 21.78px;
+  font-weight: 400;
+  padding-top: 77px;
+  font-family: Inter, sans-serif;
+}
+
+
+/*# sourceMappingURL=app_aboutUs_style_scss_22e1f6.css.map*/

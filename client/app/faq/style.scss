@@ -1,0 +1,56 @@
+// Variables
+$gray-light: #CFCFCF;
+$dark-gray: #575757;
+$jet-black: #0d0d0d;
+$darkest-black: #080808;
+$slate-gray: #242424;
+$blue: #276AEB;
+$red: #FF776F;
+$pastel-pink: #FFCCC0;
+
+$font-small: 16px;
+$font-medium: 18px;
+$font-large: 20px;
+$font-heading: 32px;
+
+.faq {
+    margin-top: 50px;
+}
+
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.faq_block_first {
+    border: 1px solid $dark-gray;
+    border-radius: 10px;
+    padding: 15px 20px;
+    user-select: none;
+    margin-bottom: 20px;
+    transition: max-height 1s ease, opacity 1s ease;
+}
+
+.faq_block-text {
+    color: $gray-light;
+    display: block;
+}
+
+.faq-content {
+    max-height: 0;
+    opacity: 0;
+
+}
+
+.faq-content-show {
+    max-height: 1000px; /* Достаточное значение для раскрытия контента */
+    opacity: 1;
+    padding: 10px 0;
+    transition: max-height 1s ease, opacity 1s ease;
+    color: $dark-gray;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}

@@ -1,8 +1,9 @@
 {
   "app": {
     "[project]/app/main/page": [],
-    "[project]/app/loader/page": [],
-    "[project]/app/chat/page": []
+    "[project]/app/aboutUs/page": [],
+    "[project]/app/_not-found/page": [],
+    "[project]/app/faq/page": []
   },
   "appUsingSizeAdjust": false,
   "pages": {},
