@@ -4,9 +4,11 @@ const findAvailableRoom = (info, user, socket) => {
     const find = info
         .filter(item =>
             item.listUsers.length === 1 &&
-            item.listUsers.some(u => u.ownGender === user.searchPartnerGender)
+            item.listUsers.some(u => u.ownGender === user.searchPartnerGender && u.searchPartnerGender === user.ownGender && u.ip !== user.ip)
         )
         .map(item => item.room);
+    console.log(find);
+
     const randomRoom = find[Math.floor(Math.random() * find.length)] || null;
     if (randomRoom) {
         socket.join(randomRoom);
@@ -40,6 +42,7 @@ const removeUserFromRoom = (info, name, io, id) => {
             }
         }
     });
+    console.log(info);
 };
 
 module.exports = { findAvailableRoom, createRoom, removeUserFromRoom };

@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
         if (roomInfo) {
             io.to(id).emit('roomState', roomInfo.listUsers.length);
         }
-        console.log(user);
+        console.log(JSON.stringify(info, null, 2));
 
     });
     // send message  to the client
@@ -52,7 +52,11 @@ io.on("connection", (socket) => {
     });
     // deletion of the user from the room
     socket.on('chat_leave', () => removeUserFromRoom(info, user, io, id));
-    socket.on('disconnect', () => removeUserFromRoom(info, user, io, id));
+    socket.on('disconnect', () => {
+        setTimeout(() => {
+            if (id) removeUserFromRoom(info, user, io, id);
+        }, 5000);
+    });
 });
 
 // Запуск сервера

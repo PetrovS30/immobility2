@@ -17,7 +17,6 @@ const Loader = () => {
         socket.emit('createRoom', userConfig);
     }
     useEffect(() => {
-        const audio = typeof Audio !== "undefined" ? new Audio('./music1.mp3') : null;
 
         if (audio) {
             audio.play();
@@ -36,7 +35,7 @@ const Loader = () => {
             socket.off('roomState');
             audio?.pause();
         };
-    }, [router, audio, userConfig.localName, ConnectToChat]);
+    }, [router]);
     const quotes = [
         "Каждый новый человек в твоей жизни — это космос, полный звёзд, которые ты ещё не видел.",
         "Дружба — это редкий дар, который не принадлежит ни времени, ни пространству.",
