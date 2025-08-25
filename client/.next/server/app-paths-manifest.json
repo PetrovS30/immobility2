@@ -1,8 +1,5 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/chat/page": "app/chat/page.js",
-  "/loader/page": "app/loader/page.js",
   "/main/page": "app/main/page.js",
-  "/faq/page": "app/faq/page.js",
-  "/aboutUs/page": "app/aboutUs/page.js"
+  "/loader/page": "app/loader/page.js",
+  "/chat/page": "app/chat/page.js"
 }

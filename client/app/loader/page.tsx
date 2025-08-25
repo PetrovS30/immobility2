@@ -29,7 +29,13 @@ const Loader = () => {
             ConnectToChat();
         }
 
-        socket.on('roomState', (data) => data > 1 && router.push('/chat'));
+        socket.on("roomState", (size) => {
+            console.log(size);
+            if (size > 1) {
+                router.push("/chat");
+                // socket.emit('userData', )
+            }
+        });
 
         return () => {
             socket.off('roomState');

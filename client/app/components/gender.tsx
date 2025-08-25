@@ -30,7 +30,7 @@ const GenderOptions: React.FC<GenderOptionProps> = ({
                         onClick={() => handleGenderSelect(option)}
                         className={`border ${selectedGender === option ? 'selected' : ''}`}
                         type="button"
-                        value={option}
+                        value={option.label}
                     />
                 ))}
             </div>

@@ -28,7 +28,7 @@ const Chat = () => {
         if (!localMessage.trim()) {
             return;
         }
-        socket.emit('sendMessae', localMessage)
+        socket.emit('sendMessae', { name: localName, msg: localMessage })
         setLocalMessage('')
         setHistory(prevHistory => {
             if (prevHistory.length > 10) {
