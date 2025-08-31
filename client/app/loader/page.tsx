@@ -1,23 +1,24 @@
 "use client"
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import socket from '@/app/socket';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
 import Marquee from 'react-fast-marquee';
 
 
 import './style.scss'
+import socket from '../socket';
 const Loader = () => {
     const userConfig = useSelector((name: RootState) => name.data);
+    console.log(userConfig);
+    
     const audio = typeof Audio !== "undefined" ? new Audio('./music1.mp3') : null;
     const router = useRouter()
 
     const ConnectToChat = () => {
-        socket.emit('createRoom', userConfig);
+        socket.emit('join', userConfig);
     }
     useEffect(() => {
-
         if (audio) {
             audio.play();
             audio.volume = 0.03;
@@ -29,7 +30,7 @@ const Loader = () => {
             ConnectToChat();
         }
 
-        socket.on("roomState", (size) => {
+        socket.on("joinRoom", (size) => {
             console.log(size);
             if (size > 1) {
                 router.push("/chat");
@@ -38,7 +39,7 @@ const Loader = () => {
         });
 
         return () => {
-            socket.off('roomState');
+            socket.off('joinRoom');
             audio?.pause();
         };
     }, [router]);

@@ -9,9 +9,9 @@ __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/socket.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/socket.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [app-ssr] (ecmascript)");
 'use client';
 ;
@@ -36,9 +36,9 @@ const Chat = ()=>{
         if (!localMessage.trim()) {
             return;
         }
-        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].emit('sendMessae', {
-            name: localName,
-            msg: localMessage
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].emit('chatMessage', {
+            localName,
+            localMessage
         });
         setLocalMessage('');
         setHistory((prevHistory)=>{
@@ -52,10 +52,15 @@ const Chat = ()=>{
         setLocalMessage(item);
     };
     const getLiveMessages = ()=>{
-        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('liveMsg', (msg)=>{
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('message', (msg)=>{
+            const { localName, localMessage } = msg;
+            console.log(localMessage);
             setHistory((prew)=>[
                     ...prew,
-                    msg
+                    {
+                        name: localName,
+                        msg: localMessage
+                    }
                 ]);
         });
     };
@@ -72,19 +77,25 @@ const Chat = ()=>{
         isMusicMessagePresent
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        getLiveMessages();
-        if (!localName) {
-            router.push('/');
-        }
-        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('currentUser', (data)=>{
-            if (data <= 1) {
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('exit', (size)=>{
+            console.log(size);
+            if (size < 2) {
                 router.push('/loader');
             }
         });
         return ()=>{
-            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].off('currentUser');
-            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].off('liveMsg');
-            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].emit('chat_leave', localName);
+            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].off('joinRoom');
+        };
+    }, []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        getLiveMessages();
+        if (!localName) {
+            router.push('/');
+        }
+        return ()=>{
+            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].off('joinRoom');
+            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].off('message');
+            __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].emit('exit', localName);
         };
     }, [
         router,
@@ -115,14 +126,14 @@ const Chat = ()=>{
                                             type: "audio/mp3"
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 91,
+                                            lineNumber: 100,
                                             columnNumber: 37
                                         }, this),
                                         "Ваш браузер не поддерживает элемент audio."
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/chat/page.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 99,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -133,7 +144,7 @@ const Chat = ()=>{
                                             children: "Администратор"
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 95,
+                                            lineNumber: 104,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -141,7 +152,7 @@ const Chat = ()=>{
                                             children: "Моменты первого контакта могут изменить вашу жизнь. Сделайте этот первый шаг и отправьте сообщение."
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 96,
+                                            lineNumber: 105,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -151,18 +162,18 @@ const Chat = ()=>{
                                                     children: item
                                                 }, index, false, {
                                                     fileName: "[project]/app/chat/page.tsx",
-                                                    lineNumber: 100,
+                                                    lineNumber: 109,
                                                     columnNumber: 87
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 98,
+                                            lineNumber: 107,
                                             columnNumber: 41
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/chat/page.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 103,
                                     columnNumber: 33
                                 }, this),
                                 history.map((item, index)=>{
@@ -176,7 +187,7 @@ const Chat = ()=>{
                                                     children: item.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/chat/page.tsx",
-                                                    lineNumber: 111,
+                                                    lineNumber: 120,
                                                     columnNumber: 53
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -184,13 +195,13 @@ const Chat = ()=>{
                                                     children: item.msg
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/chat/page.tsx",
-                                                    lineNumber: 112,
+                                                    lineNumber: 121,
                                                     columnNumber: 53
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 110,
+                                            lineNumber: 119,
                                             columnNumber: 49
                                         }, this)
                                     }, void 0, false);
@@ -198,7 +209,7 @@ const Chat = ()=>{
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/chat/page.tsx",
-                            lineNumber: 89,
+                            lineNumber: 98,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -215,7 +226,7 @@ const Chat = ()=>{
                                     value: localMessage
                                 }, void 0, false, {
                                     fileName: "[project]/app/chat/page.tsx",
-                                    lineNumber: 120,
+                                    lineNumber: 129,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -225,29 +236,29 @@ const Chat = ()=>{
                                     value: "Отправить"
                                 }, void 0, false, {
                                     fileName: "[project]/app/chat/page.tsx",
-                                    lineNumber: 129,
+                                    lineNumber: 138,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/chat/page.tsx",
-                            lineNumber: 119,
+                            lineNumber: 128,
                             columnNumber: 29
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/chat/page.tsx",
-                    lineNumber: 88,
+                    lineNumber: 97,
                     columnNumber: 25
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/chat/page.tsx",
-                lineNumber: 87,
+                lineNumber: 96,
                 columnNumber: 21
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/chat/page.tsx",
-            lineNumber: 86,
+            lineNumber: 95,
             columnNumber: 17
         }, this)
     }, void 0, false) : null;

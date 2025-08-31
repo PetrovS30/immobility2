@@ -8,15 +8,15 @@ import { sendUserQuery } from '../redux/slice';
 import myImage from './pngwing 1.png'
 import './style.scss';
 interface GenderSelection {
-  label: string;
-  value: string;
+    label: string;
+    value: string;
 }
 
 interface GenderOption {
-  id: number;
-  title: string;
-  gender: string | null;
-  genderSelection: GenderSelection[];
+    id: number;
+    title: string;
+    gender: string | null;
+    genderSelection: GenderSelection[];
 }
 const Main = () => {
     const router = useRouter();
@@ -29,8 +29,8 @@ const Main = () => {
             title: 'Ваш пол',
             gender: null,
             genderSelection: [
-                { label: 'М', value: 'maleToMale' },
-                { label: 'Ж', value: 'femaleToFemale' }
+                { label: 'М', value: 'Male' },
+                { label: 'Ж', value: 'Female' }
             ]
         },
         {
@@ -38,12 +38,13 @@ const Main = () => {
             title: 'Пол собеседника',
             gender: null,
             genderSelection: [
-                { label: 'М', value: 'maleToMale' },
-                { label: 'Ж', value: 'femaleToFemale' }
+                { label: 'М', value: 'Male' },
+                { label: 'Ж', value: 'Female' }
             ]
         }
     ]);
 
+    
     // Обработка выбора пола
     const handleGenderSelect = (id: number, selectedGender: string) => {
         setSelectedGenders(prev =>

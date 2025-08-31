@@ -19,7 +19,10 @@ const GenderOptions: React.FC<GenderOptionProps> = ({
         setSelectedGender(selectedItem);
         onGenderSelect(id, selectedItem);
     };
-
+    console.log(genderSelection);
+    console.log(onGenderSelect);
+    
+    
     return (
         <div className="gender">
             <span className="gender-label">{title}</span>
@@ -27,8 +30,8 @@ const GenderOptions: React.FC<GenderOptionProps> = ({
                 {genderSelection.map((option, index) => (
                     <input
                         key={index}
-                        onClick={() => handleGenderSelect(option)}
-                        className={`border ${selectedGender === option ? 'selected' : ''}`}
+                        onClick={() => handleGenderSelect(option.value)}
+                        className={`border ${selectedGender === option.value ? 'selected' : ''}`}
                         type="button"
                         value={option.label}
                     />

@@ -1,8 +1,7 @@
 const express = require("express");
 const http = require("http");
-const ip = require('ip');
 const { Server } = require("socket.io");
-const { findAvailableRoom, createRoom, removeUserFromRoom } = require('./service');
+const { v4: uuidv4 } = require('uuid');
 // Инициализация приложения
 const app = express();
 const server = http.createServer(app);
@@ -15,154 +14,163 @@ const io = new Server(server, {
 
 
 const genderSearch = {
-    maleToFemale: { count: 0, room: {}, waiting: { maleToMale: [], femaleToFemale: [] }, nextGender: 'maleToMale' },
-    femaleToFemale: {
-        count: 0,
-        users: [],
+    MaleToFemale: {
+        room: {},
+        current: null,
+        waiting: {
+            Male: [],
+            Female: []
+        }
+    },
+    FemaleToFemale: {
+        current: null,
         room: {}
     },
-    maleToMale: {
-        count: 0,
-        users: [],
+    MaleToMale: {
+        current: null,
         room: {}
     }
 };
 
-const registrationGender = {
-    maleToFemale: genderSearch.maleToFemale,
-    femaleToFemale: genderSearch.femaleToFemale,
-    maleToMale: genderSearch.maleToMale
-}
+// котегория
+const addToQueue = (ownGender, searchPartnerGender) => {
+    const gender = `${ownGender}To${searchPartnerGender}`;
+    const reverseGender = `${searchPartnerGender}To${ownGender}`;
+    const category = genderSearch[gender] || genderSearch[reverseGender];
+    return category;
+};
+// Однополый поиск
+const sameGender = (category, user) => {
+    const { name } = user
+    let { current, room } = category
+    if (!room[category.current] || room[category.current].length >= 2) {
+        current = uuidv4();
+        category.room[current] = [];
+        category.current = current;
+    }
+    if (room[category.current]) {
+        room[category.current].push(user)
+        user.socket.join(category.current)
+        const size = category.room[current].length
+        console.log(size);
 
-// добавление пользователя в очередь
-const addUser = (user, ownGender, searchPartnerGender, socket) => {
-    // случай: однополые комнаты
-    if (ownGender === searchPartnerGender) {
-        const category = registrationGender[searchPartnerGender];
-        if (!category.count) category.count = 1;
+        io.to(category.current).emit('joinRoom', size);
 
-        let lastRoom = `room${category.count}`;
-        if (!category.room[lastRoom]) category.room[lastRoom] = [];
+        user.socket.currentRoomData = { category, current, name };
+        console.log(category);
 
-        // если текущая комната переполнена → создаём новую
-        if (category.room[lastRoom].length >= 2) {
-            category.count++;
-            lastRoom = `room${category.count}`;
-            category.room[lastRoom] = [];
+    }
+};
+// Разнополый поиск
+const mixedGender = (category, user) => {
+    const { name, ownGender } = user;
+
+    // Если ключи в waiting — Male и Female, то так:
+    category.waiting[ownGender].push(user);
+
+    // Проверяем наличие в очередях по ключам Male и Female
+    if (
+        category.waiting.Male.length > 0 &&
+        category.waiting.Female.length > 0
+    ) {
+        const MaleArr = category.waiting.Male.shift();
+        const FemaleArr = category.waiting.Female.shift();
+
+        let current = category.current;
+
+        if (!category.room[current] || category.room[current].length >= 2) {
+            current = uuidv4();
+            category.room[current] = [];
+            category.current = current;
         }
-        const newUser = { name: user, gender: ownGender, socket };
-        category.users.push(newUser);
-        const queuedUser = category.users.shift();
-        if (!queuedUser) {
-            console.log("Очередь пуста, пользователя нет");
-            return; // выходим или обрабатываем по-другому
+
+        if (category.room[current]) {
+            category.room[current].push(MaleArr, FemaleArr);
+
+            MaleArr.socket.join(current);
+            FemaleArr.socket.join(current);
+
+            const size = category.room[current].length;
+
+            io.to(current).emit('joinRoom', size);
+
+            MaleArr.socket.currentRoomData = { category, current, name: MaleArr.name };
+            FemaleArr.socket.currentRoomData = { category, current, name: FemaleArr.name };
+
+            console.log(category.room);
         }
-
-        queuedUser.socket.join(lastRoom);
-        queuedUser.socket.lastRoom = lastRoom;
-        category.room[lastRoom].push(queuedUser);
-
-        console.log(`👤 ${queuedUser.name} (${queuedUser.gender}) добавлен в ${lastRoom}`);
-        io.to(lastRoom).emit("roomState", category.room[lastRoom].length);
-
-    } else {
-        // случай: мальчик-девочка (очередь)
-        const category = registrationGender.maleToFemale;
-        category.waiting[ownGender].push({ name: user, gender: ownGender, socket });
+    }
+};
+// обработчик для вызова функции
+const getGender = (category, user) => {
+    if (category?.waiting) {
+        mixedGender(category, user)
+    }
+    else {
+        sameGender(category, user)
     }
 };
 
+// OwnGender: "Male"
+// currentPath: "/main"
+// localName: "tgt"
+// searchOptions:
+// searchPartnerGender: "Male
 
-// setInterval(() => {
-//     const category = registrationGender.maleToFemale;
-//     const maleWaiting = category.waiting.maleToMale;
-//     const femaleWaiting = category.waiting.femaleToFemale;
-//     console.log(genderSearch.maleToFemale.waiting);
-//     // пока есть хотя бы один мужчина и одна женщина
-//     while (maleWaiting.length > 0 && femaleWaiting.length > 0) {
-//         const maleUser = maleWaiting.shift();
-//         const femaleUser = femaleWaiting.shift();
-
-//         // получаем последнюю комнату или создаём новую
-//         let lastRoom = category.count;
-//         if (!category.room[lastRoom] || category.room[lastRoom].length >= 2) {
-//             category.count = (category.count || 0) + 1;
-//             lastRoom = `room${category.count}`;
-//             category.room[lastRoom] = [];
-//         }
-
-//         // добавляем пользователей в комнату
-//         category.room[lastRoom].push(maleUser, femaleUser);
-
-//         console.log(`Создана комната ${lastRoom}: ${maleUser.name} + ${femaleUser.name}`);
-//         // 🔥 Уведомляем обоих клиентов;
-//         console.log(category.room[lastRoom]);
-
-//         category.room[lastRoom].forEach(user => {
-//             user.socket.join(lastRoom);
-//             console.log(`${user.name} (${user.gender}) подключился к комнате ${lastRoom}`);
-//         });
-//         io.to(lastRoom).emit('roomState', [category.room[lastRoom]]);
-
-//     }
-// }, 5000);
-
-// // client connection to the room
+// socket
 io.on("connection", (socket) => {
-    const category = registrationGender.maleToFemale;
-
-    socket.on('createRoom', (data) => {
-        const ip = socket.handshake.address.replace(/^::ffff:/, '');
-        const localName = data.localName;
-        const ownGender = data.OwnGender;
-        const searchPartnerGender = data.searchOptions.searchPartnerGender;
-
-        addUser(localName, ownGender.value, searchPartnerGender.value, socket);
-
-        const maleWaiting = category.waiting.maleToMale;
-        const femaleWaiting = category.waiting.femaleToFemale;
-
-        while (maleWaiting.length > 0 && femaleWaiting.length > 0) {
-            const maleUser = maleWaiting.shift();
-            const femaleUser = femaleWaiting.shift();
-
-            // создаём комнату
-            category.count = (category.count || 0) + 1;
-            const lastRoom = `room${category.count}`;
-            category.room[lastRoom] = [];
-
-            // добавляем пользователей в комнату
-            maleUser.socket.join(lastRoom);
-            femaleUser.socket.join(lastRoom);
-
-            maleUser.socket.lastRoom = lastRoom;
-            femaleUser.socket.lastRoom = lastRoom;
-
-            category.room[lastRoom].push(maleUser, femaleUser);
-
-            console.log(`Создана комната ${lastRoom}: ${maleUser.name} + ${femaleUser.name}`);
-            io.to(lastRoom).emit('roomState', category.room[lastRoom].length);
+    socket.on("join", (data) => {
+        const { localName, OwnGender, searchOptions } = data;
+        const user = {
+            name: localName,
+            ownGender: OwnGender,
+            socket: socket
         }
-    });
+        const getCategory = addToQueue(OwnGender, searchOptions.searchPartnerGender);
+        getGender(getCategory, user)
+    })
 
-    socket.on('sendMessae', ({ name, msg }) => {
-        if (!socket.lastRoom) {
-            console.log("⚠️ Пользователь не в комнате, сообщение не отправлено");
-            return;
+    // send
+    socket.on("chatMessage", (msg) => {
+        const { localName, localMessage } = msg;
+        io.to(socket?.currentRoomData.current).emit('message', { localName, localMessage });
+    })
+
+    function handleUserLeave(socket) {
+        if (!socket.currentRoomData) return;
+
+        const { category, current, name } = socket.currentRoomData;
+
+        const room = category.room[current];
+        if (!room) return;
+
+        // Удаляем пользователя из комнаты
+        const waiting = category.room[current] = room.filter(user => user.name !== name);
+        // Удаляем сокет из комнаты
+        socket.leave(current);
+        // Если комната пустая — удаляем её
+        if (category.room[current].length === 0) {
+            delete category.room[current];
         }
-        io.to(socket.lastRoom).emit('liveMsg', { name, msg });
+        // Оповещаем оставшихся, что кто-то вышел
+        io.to(current).emit('exit', 0);
+        // Удаляем данные о комнате из сокета
+        delete socket.currentRoomData;
+        waiting.forEach(element => {
+            getGender(category, element)
+        });
+
+    }
+
+    socket.on("exit", () => {
+        handleUserLeave(socket)
     });
-    socket.on('chat_leave', (text) => console.log(text));
-});
-// send message  to the client
+    socket.on("disconnect", () => {
+        handleUserLeave(socket)
+    })
+})
 
-// deletion of the user from the room
 
-// socket.on('disconnect', () => {
-//     setTimeout(() => {
-//         if (id) removeUserFromRoom(info, user, io, id);
-//     }, 5000);
-// });
 
 
 // Запуск сервера

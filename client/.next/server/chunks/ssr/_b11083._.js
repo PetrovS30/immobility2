@@ -18,6 +18,8 @@ const GenderOptions = ({ id, title, genderSelection, onGenderSelect })=>{
         setSelectedGender(selectedItem);
         onGenderSelect(id, selectedItem);
     };
+    console.log(genderSelection);
+    console.log(onGenderSelect);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "gender",
         children: [
@@ -26,30 +28,30 @@ const GenderOptions = ({ id, title, genderSelection, onGenderSelect })=>{
                 children: title
             }, void 0, false, {
                 fileName: "[project]/app/components/gender.tsx",
-                lineNumber: 25,
+                lineNumber: 28,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "gender-options",
                 children: genderSelection.map((option, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                        onClick: ()=>handleGenderSelect(option),
-                        className: `border ${selectedGender === option ? 'selected' : ''}`,
+                        onClick: ()=>handleGenderSelect(option.value),
+                        className: `border ${selectedGender === option.value ? 'selected' : ''}`,
                         type: "button",
                         value: option.label
                     }, index, false, {
                         fileName: "[project]/app/components/gender.tsx",
-                        lineNumber: 28,
+                        lineNumber: 31,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/components/gender.tsx",
-                lineNumber: 26,
+                lineNumber: 29,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/gender.tsx",
-        lineNumber: 24,
+        lineNumber: 27,
         columnNumber: 9
     }, this);
 };
@@ -117,11 +119,11 @@ const Main = ()=>{
             genderSelection: [
                 {
                     label: 'М',
-                    value: 'maleToMale'
+                    value: 'Male'
                 },
                 {
                     label: 'Ж',
-                    value: 'femaleToFemale'
+                    value: 'Female'
                 }
             ]
         },
@@ -132,11 +134,11 @@ const Main = ()=>{
             genderSelection: [
                 {
                     label: 'М',
-                    value: 'maleToMale'
+                    value: 'Male'
                 },
                 {
                     label: 'Ж',
-                    value: 'femaleToFemale'
+                    value: 'Female'
                 }
             ]
         }
@@ -179,20 +181,20 @@ const Main = ()=>{
                                     children: "В нашем мире анонимных знакомств каждое лицо - загадка, каждый человек - история."
                                 }, void 0, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 81,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     children: "Помните, ответственность за вашу безопасность лежит на вас. Не передавайте личные данные и будьте осторожны."
                                 }, void 0, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 83,
+                                    lineNumber: 84,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 79,
+                            lineNumber: 80,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -200,14 +202,14 @@ const Main = ()=>{
                             alt: "Description"
                         }, void 0, false, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 88,
+                            lineNumber: 89,
                             columnNumber: 21
                         }, this),
                         ";"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/main/page.tsx",
-                    lineNumber: 78,
+                    lineNumber: 79,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -218,7 +220,7 @@ const Main = ()=>{
                             children: "Чат"
                         }, void 0, false, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 91,
+                            lineNumber: 92,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -229,19 +231,19 @@ const Main = ()=>{
                                     children: "В разработке"
                                 }, void 0, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 94,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 92,
+                            lineNumber: 93,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/main/page.tsx",
-                    lineNumber: 90,
+                    lineNumber: 91,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -260,12 +262,12 @@ const Main = ()=>{
                                     onGenderSelect: handleGenderSelect
                                 }, option.id, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 100,
+                                    lineNumber: 101,
                                     columnNumber: 29
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 98,
+                            lineNumber: 99,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -279,7 +281,7 @@ const Main = ()=>{
                                     placeholder: "Ваше имя"
                                 }, void 0, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 110,
+                                    lineNumber: 111,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -289,30 +291,30 @@ const Main = ()=>{
                                     className: "search-button"
                                 }, void 0, false, {
                                     fileName: "[project]/app/main/page.tsx",
-                                    lineNumber: 117,
+                                    lineNumber: 118,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/main/page.tsx",
-                            lineNumber: 109,
+                            lineNumber: 110,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/main/page.tsx",
-                    lineNumber: 97,
+                    lineNumber: 98,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/main/page.tsx",
-            lineNumber: 77,
+            lineNumber: 78,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/main/page.tsx",
-        lineNumber: 76,
+        lineNumber: 77,
         columnNumber: 9
     }, this);
 };

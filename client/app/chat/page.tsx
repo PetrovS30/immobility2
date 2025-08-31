@@ -1,11 +1,11 @@
 'use client'
-import socket from '@/app/socket';
+
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
-
 import './style.scss'
+import socket from '../socket';
 interface Message {
     name: string;
     msg: string;
@@ -28,7 +28,7 @@ const Chat = () => {
         if (!localMessage.trim()) {
             return;
         }
-        socket.emit('sendMessae', { name: localName, msg: localMessage })
+        socket.emit('chatMessage', { localName, localMessage })
         setLocalMessage('')
         setHistory(prevHistory => {
             if (prevHistory.length > 10) {
@@ -42,8 +42,11 @@ const Chat = () => {
         setLocalMessage(item)
     }
     const getLiveMessages = () => {
-        socket.on('liveMsg', (msg) => {
-            setHistory((prew) => [...prew, msg])
+        socket.on('message', (msg) => {
+            const { localName, localMessage } = msg;
+            console.log(localMessage);
+
+            setHistory((prew) => [...prew, { name: localName, msg: localMessage }])
         })
     };
     const isMusicMessagePresent = history.some((item) => item.msg === 'Хочу Музыку');
@@ -54,22 +57,28 @@ const Chat = () => {
         }
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [history, isMusicMessagePresent]);
+    useEffect(() => {
+        socket.on('exit', size => {
+            console.log(size);
 
+            if (size < 2) {
+                router.push('/loader')
+            }
+        })
+        return () => {
+            socket.off('joinRoom')
+
+        }
+    }, [])
     useEffect(() => {
         getLiveMessages()
         if (!localName) {
             router.push('/');
         }
-
-        socket.on('currentUser', data => {
-            if (data <= 1) {
-                router.push('/loader')
-            }
-        })
         return () => {
-            socket.off('currentUser')
-            socket.off('liveMsg');
-            socket.emit('chat_leave', localName)
+            socket.off('joinRoom')
+            socket.off('message')
+            socket.emit('exit', localName)
         }
     }, [router, localName]);
 
