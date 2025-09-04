@@ -76,6 +76,18 @@
   margin-right: 44px;
 }
 
+.form-section .gender .gender-male {
+  border: 1px solid #276aeb;
+  background-color: #276aeb;
+  cursor: pointer;
+}
+
+.form-section .gender .gender-female {
+  border: 1px solid red;
+  background-color: red;
+  cursor: pointer;
+}
+
 .form-section .gender-label {
   margin-bottom: 22px;
   display: block;
@@ -116,7 +128,6 @@
 .border.selected {
   transition: all .3s;
   background: linear-gradient(46deg, #225cff33, #fff0);
-  border: 1px solid #276aeb !important;
 }
 
 .text-input {

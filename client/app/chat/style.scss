@@ -34,8 +34,39 @@ $slate-gray: #242424;
     margin: 0 auto;
     padding-bottom: 180px;
 
+    .chat-actions {
+        display: flex;
+        gap: 21px;
+        margin-top: 80px;
+        .chat-end, .chat-report {
+            display: flex;
+            gap: 5px;
+        }
+
+        .chat-report-btn {
+            font-weight: 300;
+            font-size: 14px;
+            color: #FF776F;
+            background-color: inherit;
+            border: none;
+            font-family: 'Inter' serif;
+            cursor: pointer;
+        }
+
+        .chat-end-btn {
+            cursor: pointer;
+            font-weight: 300;
+            font-size: 14px;
+            color: #FFFFFF;
+            background-color: inherit;
+            border: none;
+            font-family: 'Inter' serif;
+        }
+
+    }
+
     .message {
-        margin-top: 30px;
+        margin-top: 80px;
 
         .textUser {
             color: $dark-gray !important;

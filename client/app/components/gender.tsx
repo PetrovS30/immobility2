@@ -14,6 +14,8 @@ const GenderOptions: React.FC<GenderOptionProps> = ({
     onGenderSelect,
 }) => {
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
+    console.log(selectedGender);
+    
 
     const handleGenderSelect = (selectedItem: string) => {
         setSelectedGender(selectedItem);
@@ -31,7 +33,7 @@ const GenderOptions: React.FC<GenderOptionProps> = ({
                     <input
                         key={index}
                         onClick={() => handleGenderSelect(option.value)}
-                        className={`border ${selectedGender === option.value ? 'selected' : ''}`}
+                        className={`border ${selectedGender === option.value ? 'selected' : '' } ${selectedGender === 'Male' && option.value === "Male" ? 'gender-male': null } ${selectedGender === 'Female' && option.value === "Female" ? 'gender-female': null }`}
                         type="button"
                         value={option.label}
                     />

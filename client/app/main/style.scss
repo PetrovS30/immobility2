@@ -90,6 +90,17 @@ $font-heading: 32px;
 
     .gender {
         margin-right: 44px;
+        .gender-male {
+            border: #276AEB 1px solid;
+            background-color: #276AEB;
+            cursor: pointer;
+        }
+
+        .gender-female {
+            border: #FF0000 1px solid;
+            background-color: #FF0000;
+            cursor: pointer;
+}
     }
 
     .gender-label {
@@ -107,6 +118,7 @@ $font-heading: 32px;
         margin-right: 10px;
         background-color: $jet-black;
     }
+
 }
 
 @media (max-width:500px) {
@@ -130,8 +142,9 @@ $font-heading: 32px;
     background-color: #313131;
 }
 
+
+
 .border.selected {
-    border: 1px solid #276AEB !important;
     transition: .3s ease;
     background: linear-gradient(46deg, #225cff33, #ffffff00);
 }

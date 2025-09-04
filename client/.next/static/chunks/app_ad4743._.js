@@ -7,6 +7,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__),
+    "resetChatState": (()=>resetChatState),
     "sendUserQuery": (()=>sendUserQuery),
     "setPageLog": (()=>setPageLog)
 });
@@ -24,6 +25,7 @@ const UserSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
     name: 'user',
     initialState,
     reducers: {
+        resetChatState: ()=>initialState,
         sendUserQuery: (state, actions)=>{
             const { localName, OwnGender, PartnerGender } = actions.payload;
             state.localName = localName;
@@ -35,7 +37,7 @@ const UserSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         }
     }
 });
-const { sendUserQuery, setPageLog } = UserSlice.actions;
+const { resetChatState, sendUserQuery, setPageLog } = UserSlice.actions;
 const __TURBOPACK__default__export__ = UserSlice.reducer;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);

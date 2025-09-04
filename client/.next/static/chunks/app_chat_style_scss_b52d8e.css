@@ -29,8 +29,39 @@
   padding-bottom: 180px;
 }
 
+.chat .chat-actions {
+  display: flex;
+  gap: 21px;
+  margin-top: 80px;
+}
+
+.chat .chat-actions .chat-end, .chat .chat-actions .chat-report {
+  display: flex;
+  gap: 5px;
+}
+
+.chat .chat-actions .chat-report-btn {
+  font-weight: 300;
+  font-size: 14px;
+  color: #ff776f;
+  background-color: inherit;
+  border: none;
+  font-family: "Inter" serif;
+  cursor: pointer;
+}
+
+.chat .chat-actions .chat-end-btn {
+  cursor: pointer;
+  font-weight: 300;
+  font-size: 14px;
+  color: #fff;
+  background-color: inherit;
+  border: none;
+  font-family: "Inter" serif;
+}
+
 .chat .message {
-  margin-top: 30px;
+  margin-top: 80px;
 }
 
 .chat .message .textUser {

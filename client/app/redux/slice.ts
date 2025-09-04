@@ -26,7 +26,9 @@ const initialState: User = {
 const UserSlice = createSlice({
     name: 'user',
     initialState,
+    
     reducers: {
+        resetChatState: () => initialState,
         sendUserQuery: (state, actions: PayloadAction<Send>) => {
             const { localName, OwnGender, PartnerGender } = actions.payload;
             state.localName = localName;
@@ -40,7 +42,7 @@ const UserSlice = createSlice({
 });
 
 // Экспортируем действия
-export const { sendUserQuery, setPageLog } = UserSlice.actions;
+export const {resetChatState, sendUserQuery, setPageLog } = UserSlice.actions;
 
 // Экспортируем редюсер
 export default UserSlice.reducer;

@@ -39,6 +39,7 @@ const addToQueue = (ownGender, searchPartnerGender) => {
     const category = genderSearch[gender] || genderSearch[reverseGender];
     return category;
 };
+
 // Однополый поиск
 const sameGender = (category, user) => {
     const { name } = user
@@ -61,14 +62,13 @@ const sameGender = (category, user) => {
 
     }
 };
+
 // Разнополый поиск
 const mixedGender = (category, user) => {
     const { name, ownGender } = user;
 
-    // Если ключи в waiting — Male и Female, то так:
     category.waiting[ownGender].push(user);
 
-    // Проверяем наличие в очередях по ключам Male и Female
     if (
         category.waiting.Male.length > 0 &&
         category.waiting.Female.length > 0
@@ -101,6 +101,7 @@ const mixedGender = (category, user) => {
         }
     }
 };
+
 // обработчик для вызова функции
 const getGender = (category, user) => {
     if (category?.waiting) {
@@ -111,15 +112,14 @@ const getGender = (category, user) => {
     }
 };
 
-// OwnGender: "Male"
-// currentPath: "/main"
-// localName: "tgt"
-// searchOptions:
-// searchPartnerGender: "Male
-
-// socket
 io.on("connection", (socket) => {
+
     socket.on("join", (data) => {
+        if (socket.currentRoomData) {
+        handleUserLeave(socket); // 👈 ДОБАВЬ ЭТО
+    }
+        socket.hasLeft = false;
+
         const { localName, OwnGender, searchOptions } = data;
         const user = {
             name: localName,
@@ -136,44 +136,48 @@ io.on("connection", (socket) => {
         io.to(socket?.currentRoomData.current).emit('message', { localName, localMessage });
     })
 
+
+    socket.on('exitChat', () => {
+        console.log('🚪 Пользователь вышел:', socket.id);
+        handleUserLeave(socket); // удаляем из комнаты
+        socket.emit('chatEnded', 'Чат завершён'); // отправляем клиенту
+         // отключаем сокет
+    });
+
     function handleUserLeave(socket) {
-        if (!socket.currentRoomData) return;
+        if (socket.hasLeft || !socket.currentRoomData) return;
+        socket.hasLeft = true;
 
         const { category, current, name } = socket.currentRoomData;
-
         const room = category.room[current];
         if (!room) return;
 
         // Удаляем пользователя из комнаты
-        const waiting = category.room[current] = room.filter(user => user.name !== name);
-        // Удаляем сокет из комнаты
+        category.room[current] = room.filter(user => user.name !== name);
         socket.leave(current);
+
         // Если комната пустая — удаляем её
         if (category.room[current].length === 0) {
             delete category.room[current];
         }
-        // Оповещаем оставшихся, что кто-то вышел
-        io.to(current).emit('exit', 0);
-        // Удаляем данные о комнате из сокета
-        delete socket.currentRoomData;
-        waiting.forEach(element => {
-            getGender(category, element)
-        });
 
+        // Уведомляем второго участника
+        io.to(current).emit('exit', category.room[current]?.length || 0);
+
+        // Удаляем данные
+        delete socket.currentRoomData;
     }
+
 
     socket.on("exit", () => {
         handleUserLeave(socket)
     });
+
     socket.on("disconnect", () => {
         handleUserLeave(socket)
     })
 })
 
-
-
-
-// Запуск сервера
 const PORT = 4000;
 server.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
