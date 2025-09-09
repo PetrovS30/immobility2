@@ -31,30 +31,30 @@ const GenderOptions = ({ id, title, genderSelection, onGenderSelect })=>{
                 children: title
             }, void 0, false, {
                 fileName: "[project]/app/components/gender.tsx",
-                lineNumber: 30,
+                lineNumber: 35,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "gender-options",
                 children: genderSelection.map((option, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                         onClick: ()=>handleGenderSelect(option.value),
-                        className: `border ${selectedGender === option.value ? 'selected' : ''} ${selectedGender === 'Male' && option.value === "Male" ? 'gender-male' : null} ${selectedGender === 'Female' && option.value === "Female" ? 'gender-female' : null}`,
+                        className: `${selectedGender === 'Male' && option.value === "Male" ? 'gender-male' : null} ${selectedGender === 'Female' && option.value === "Female" ? 'gender-female' : null}`,
                         type: "button",
                         value: option.label
                     }, index, false, {
                         fileName: "[project]/app/components/gender.tsx",
-                        lineNumber: 33,
+                        lineNumber: 38,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/components/gender.tsx",
-                lineNumber: 31,
+                lineNumber: 36,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/gender.tsx",
-        lineNumber: 29,
+        lineNumber: 34,
         columnNumber: 9
     }, this);
 };

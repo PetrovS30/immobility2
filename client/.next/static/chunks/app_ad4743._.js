@@ -7,7 +7,6 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__),
-    "resetChatState": (()=>resetChatState),
     "sendUserQuery": (()=>sendUserQuery),
     "setPageLog": (()=>setPageLog)
 });
@@ -25,7 +24,6 @@ const UserSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
     name: 'user',
     initialState,
     reducers: {
-        resetChatState: ()=>initialState,
         sendUserQuery: (state, actions)=>{
             const { localName, OwnGender, PartnerGender } = actions.payload;
             state.localName = localName;
@@ -37,7 +35,7 @@ const UserSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         }
     }
 });
-const { resetChatState, sendUserQuery, setPageLog } = UserSlice.actions;
+const { sendUserQuery, setPageLog } = UserSlice.actions;
 const __TURBOPACK__default__export__ = UserSlice.reducer;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -70,7 +68,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
-// import logo from '../../src/assets/image/БЕЗДВИЖЕНИЯ.svg';
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
@@ -86,12 +83,30 @@ const Header = ()=>{
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "header",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("link", {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                            href: "/",
                             className: "logo",
-                            href: "/"
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: "/immobility.svg",
+                                alt: "БезДвижения"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/header.tsx",
+                                lineNumber: 10,
+                                columnNumber: 29
+                            }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/header.tsx",
                             lineNumber: 9,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            style: {
+                                color: 'white'
+                            },
+                            children: "Сейчасонлайн:"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/header.tsx",
+                            lineNumber: 12,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -103,7 +118,7 @@ const Header = ()=>{
                                     children: "Главная"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/header.tsx",
-                                    lineNumber: 13,
+                                    lineNumber: 16,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -112,7 +127,7 @@ const Header = ()=>{
                                     children: "О нас"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/header.tsx",
-                                    lineNumber: 14,
+                                    lineNumber: 17,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -121,7 +136,7 @@ const Header = ()=>{
                                     children: "Контакты"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/header.tsx",
-                                    lineNumber: 15,
+                                    lineNumber: 18,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -130,13 +145,13 @@ const Header = ()=>{
                                     children: "FAQ"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/header.tsx",
-                                    lineNumber: 16,
+                                    lineNumber: 19,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/components/header.tsx",
-                            lineNumber: 12,
+                            lineNumber: 15,
                             columnNumber: 25
                         }, this)
                     ]

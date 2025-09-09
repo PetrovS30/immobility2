@@ -297,6 +297,15 @@ header {
   justify-content: space-between;
 }
 
+.header-logo {
+  min-width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
 .logo img {
   width: 201.413px;
   height: 21.903px;

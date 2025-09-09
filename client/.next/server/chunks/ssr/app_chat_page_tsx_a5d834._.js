@@ -11,11 +11,9 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$redux$2f$slice$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/redux/slice.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/socket.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [app-ssr] (ecmascript)");
 'use client';
-;
 ;
 ;
 ;
@@ -112,20 +110,15 @@ const Chat = ()=>{
             sendMessage();
         }
     };
-    const resetLocalState = ()=>{
-        // Очистка локального состояния
-        setLocalMessage('');
-        setHistory([]);
-        setInputActive(false);
-    };
     const exitChat = ()=>{
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].emit('exitChat'); // уведомляем сервер
     };
     __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('chatEnded', (msg)=>{
         console.log('Сервер завершил чат:', msg);
-        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$redux$2f$slice$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["resetChatState"])()); // сброс redux
-        resetLocalState(); // очистка локального стейта
-        router.push('/'); // редирект
+        router.push('/');
+    });
+    __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$socket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].on('exit', ()=>{
+        router.push('/loader');
     });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "chat-container",
@@ -145,14 +138,14 @@ const Chat = ()=>{
                                         type: "audio/mp3"
                                     }, void 0, false, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 124,
                                         columnNumber: 29
                                     }, this),
                                     "Ваш браузер не поддерживает элемент audio."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/chat/page.tsx",
-                                lineNumber: 129,
+                                lineNumber: 123,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -166,7 +159,7 @@ const Chat = ()=>{
                                                 alt: "chat-end"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/chat/page.tsx",
-                                                lineNumber: 135,
+                                                lineNumber: 129,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -175,13 +168,13 @@ const Chat = ()=>{
                                                 children: "Завершить чат"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/chat/page.tsx",
-                                                lineNumber: 136,
+                                                lineNumber: 130,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 134,
+                                        lineNumber: 128,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -192,7 +185,7 @@ const Chat = ()=>{
                                                 alt: "chat-report"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/chat/page.tsx",
-                                                lineNumber: 139,
+                                                lineNumber: 133,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -200,19 +193,19 @@ const Chat = ()=>{
                                                 children: "Пожаловаться"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/chat/page.tsx",
-                                                lineNumber: 140,
+                                                lineNumber: 134,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 132,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/chat/page.tsx",
-                                lineNumber: 133,
+                                lineNumber: 127,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -222,14 +215,14 @@ const Chat = ()=>{
                                         children: "Администратор"
                                     }, void 0, false, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 144,
+                                        lineNumber: 138,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: "Моменты первого контакта могут изменить вашу жизнь. Сделайте этот первый шаг и отправьте сообщение."
                                     }, void 0, false, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 139,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -239,18 +232,18 @@ const Chat = ()=>{
                                                 children: item
                                             }, index, false, {
                                                 fileName: "[project]/app/chat/page.tsx",
-                                                lineNumber: 148,
+                                                lineNumber: 142,
                                                 columnNumber: 37
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/chat/page.tsx",
-                                        lineNumber: 146,
+                                        lineNumber: 140,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/chat/page.tsx",
-                                lineNumber: 143,
+                                lineNumber: 137,
                                 columnNumber: 25
                             }, this),
                             history.map((item, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -262,26 +255,26 @@ const Chat = ()=>{
                                             children: item.name
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 154,
+                                            lineNumber: 148,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: item.msg
                                         }, void 0, false, {
                                             fileName: "[project]/app/chat/page.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 149,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, index, true, {
                                     fileName: "[project]/app/chat/page.tsx",
-                                    lineNumber: 153,
+                                    lineNumber: 147,
                                     columnNumber: 29
                                 }, this))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/chat/page.tsx",
-                        lineNumber: 128,
+                        lineNumber: 122,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -298,7 +291,7 @@ const Chat = ()=>{
                                 value: localMessage
                             }, void 0, false, {
                                 fileName: "[project]/app/chat/page.tsx",
-                                lineNumber: 160,
+                                lineNumber: 154,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -308,29 +301,29 @@ const Chat = ()=>{
                                 value: "Отправить"
                             }, void 0, false, {
                                 fileName: "[project]/app/chat/page.tsx",
-                                lineNumber: 169,
+                                lineNumber: 163,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/chat/page.tsx",
-                        lineNumber: 159,
+                        lineNumber: 153,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/chat/page.tsx",
-                lineNumber: 127,
+                lineNumber: 121,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/chat/page.tsx",
-            lineNumber: 126,
+            lineNumber: 120,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/chat/page.tsx",
-        lineNumber: 125,
+        lineNumber: 119,
         columnNumber: 9
     }, this);
 };

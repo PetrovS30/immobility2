@@ -144,9 +144,9 @@ io.on("connection", (socket) => {
          // отключаем сокет
     });
 
+
     function handleUserLeave(socket) {
-        if (socket.hasLeft || !socket.currentRoomData) return;
-        socket.hasLeft = true;
+        if (!socket.currentRoomData) return;
 
         const { category, current, name } = socket.currentRoomData;
         const room = category.room[current];
@@ -156,29 +156,53 @@ io.on("connection", (socket) => {
         category.room[current] = room.filter(user => user.name !== name);
         socket.leave(current);
 
-        // Если комната пустая — удаляем её
-        if (category.room[current].length === 0) {
+        // Найдём второго участника
+        const remainingUsers = category.room[current];
+        if (remainingUsers.length === 1) {
+            const remainingUser = remainingUsers[0];
+
+            // Удаляем комнату
             delete category.room[current];
+
+            // Удаляем данные о комнате у второго участника
+            delete remainingUser.socket.currentRoomData;
+
+            // Возвращаем второго участника в очередь
+            if (category.waiting) {
+                category.waiting[remainingUser.ownGender].push(remainingUser);
+            }
+
+            // Запускаем поиск заново
+            getGender(category, remainingUser);
         }
 
-        // Уведомляем второго участника
-        io.to(current).emit('exit', category.room[current]?.length || 0);
+        // Уведомляем о выходе
+        io.to(current).emit('exit', 0);
 
-        // Удаляем данные
+        // Удаляем данные о комнате из сокета
         delete socket.currentRoomData;
     }
-
 
     socket.on("exit", () => {
         handleUserLeave(socket)
     });
 
     socket.on("disconnect", () => {
-        handleUserLeave(socket)
+        handleUserLeave(socket);
     })
-})
+
+    io.emit('onlineCount', io.engine.clientsCount);
+
+    socket.on('disconnect', () => {
+        console.log('Пользователь отключился:', socket.id);
+        io.emit('onlineCount', io.engine.clientsCount);
+    });
+
+})  
 
 const PORT = 4000;
 server.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });
+
+
