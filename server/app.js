@@ -112,8 +112,12 @@ const getGender = (category, user) => {
     }
 };
 
-io.on("connection", (socket) => {
 
+//функция для подсчёта
+const getOnlineCount = () => io.of("/").sockets.size;
+
+io.on("connection", (socket) => {
+        io.emit("onlineCount", getOnlineCount()); // 👈 Добавь это
     socket.on("join", (data) => {
         if (socket.currentRoomData) {
         handleUserLeave(socket); // 👈 ДОБАВЬ ЭТО
@@ -187,15 +191,11 @@ io.on("connection", (socket) => {
         handleUserLeave(socket)
     });
 
-    socket.on("disconnect", () => {
-        handleUserLeave(socket);
-    })
-
-    io.emit('onlineCount', io.engine.clientsCount);
 
     socket.on('disconnect', () => {
+        handleUserLeave(socket);
         console.log('Пользователь отключился:', socket.id);
-        io.emit('onlineCount', io.engine.clientsCount);
+        io.emit("onlineCount", getOnlineCount()); // при отключении
     });
 
 })  
